@@ -1,0 +1,41 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from time import sleep
+import files
+
+def recruto_action(url, id, proffile):
+    chrome_drive_path = r"C:\Users\User\AppData\Local\Programs\Python\Python38\Tools\chromedriver_win32\chromedriver.exe"
+    webdriver.Chrome(executable_path=chrome_drive_path).quit()
+    driver = webdriver.Chrome(executable_path=chrome_drive_path)
+    driver.get(url)
+    driver.implicitly_wait(5)
+    sleep(5)
+    driver.find_elements_by_class_name('apply-button')[0].click()
+    sleep(5)
+    driver.find_elements_by_class_name('form-control')[0].send_keys(Keys.DOWN)
+    driver.find_elements_by_class_name('form-control')[1].send_keys(Keys.DOWN)
+    driver.find_elements_by_class_name('form-control')[2].send_keys(Keys.DOWN)
+    driver.find_elements_by_class_name('form-control')[3].send_keys(proffile.email())
+    driver.find_elements_by_class_name('form-control')[4].send_keys(proffile.email())
+    driver.find_elements_by_class_name('form-control')[5].send_keys(proffile.f_name())
+    driver.find_elements_by_class_name('form-control')[6].send_keys(proffile.l_name())
+    driver.find_elements_by_class_name('form-control')[7].send_keys('1986')
+    driver.find_elements_by_class_name('form-control')[8].send_keys(proffile.street() + ' ' + proffile.street_number())
+    driver.find_elements_by_class_name('form-control')[9].send_keys(proffile.zip_code())
+    driver.find_elements_by_class_name('form-control')[10].send_keys(proffile.town())
+    driver.find_elements_by_class_name('form-control')[11].send_keys(proffile.telefon())
+    driver.find_elements_by_class_name('form-control')[13].send_keys('Svenska')
+    driver.find_elements_by_class_name('form-control')[14].send_keys('Flytande')
+    driver.find_elements_by_class_name('btn-primary')[3].click()
+    driver.find_elements_by_class_name('form-control')[15].send_keys('Engelska')
+    driver.find_elements_by_class_name('form-control')[16].send_keys('Flytande')
+    driver.find_elements_by_class_name('btn-primary')[3].click()
+    driver.find_elements_by_class_name('form-control')[17].send_keys('Ryska')
+    driver.find_elements_by_class_name('form-control')[18].send_keys('Modersmål')
+    driver.find_elements_by_class_name('form-control')[24].send_keys(proffile.p_brev())
+    sleep(15)
+    driver.find_element_by_id('policy').send_keys(Keys.SPACE)
+    driver.find_element_by_id('submitbutton').click()
+    sleep(15)
+    files.add_new_link_to_list(url, id, 'link_list.csv')
+    driver.quit()
